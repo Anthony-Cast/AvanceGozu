@@ -1,12 +1,13 @@
 package com.example.avances.entity;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 
+
 @Entity
-@Table(name="usuario")
+@Table(name="usuarios")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +23,7 @@ public class Usuario {
     @Column(nullable = false)
     private String telefono;
     @Column(nullable = false)
-    private LocalDate fechanacimiento;
+    private Date fechanacimiento;
     @Column(nullable = false)
     private String sexo;
     @Column(nullable = false)
@@ -31,7 +32,7 @@ public class Usuario {
     @Column(nullable = false)
     private String rol;
     private Integer cuentaactiva;
-    private LocalDateTime ultimafechadeingreso;
+    private Date ultimafechaingreso;
 
     public Integer getIdusuario() {
         return idusuario;
@@ -81,11 +82,11 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public LocalDate getFechanacimiento() {
+    public Date getFechanacimiento() {
         return fechanacimiento;
     }
 
-    public void setFechanacimiento(LocalDate fechanacimiento) {
+    public void setFechanacimiento(Date fechanacimiento) {
         this.fechanacimiento = fechanacimiento;
     }
 
@@ -129,11 +130,11 @@ public class Usuario {
         this.cuentaactiva = cuentaactiva;
     }
 
-    public LocalDateTime getUltimafechadeingreso() {
-        return ultimafechadeingreso;
+    public Date getUltimafechaingreso() {
+        return ultimafechaingreso;
     }
 
-    public void setUltimafechadeingreso(LocalDateTime ultimafechadeingreso) {
-        this.ultimafechadeingreso = ultimafechadeingreso;
+    public void setUltimafechaingreso(Date ultimafechaingreso) {
+        this.ultimafechaingreso = ultimafechaingreso;
     }
 }

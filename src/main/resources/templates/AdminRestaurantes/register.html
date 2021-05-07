@@ -54,15 +54,17 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                <form class="main_form" style="align-self: center">
+                                <form class="main_form" style="align-self: center" method="post" th:action="@{/guardaradmin}">
                                     <div style="font-size: 40px;color: black;text-align: center">Llena el siguiente formulario</div>
                                     <br>
                                     <div class="row">
+                                        <input class="form-control" type="hidden" name="rol" id="rol" value="Administrador Restaurante">
+                                        <input class="form-control" type="hidden" name="cuentaactiva" id="cuentaactiva" value="0">
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                             <input class="form-control" placeholder="Nombre" type="text" name="nombre" id="nombre">
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control" placeholder="Apelliods" type="text" name="apellidos" id="apellidos">
+                                            <input class="form-control" placeholder="Apellidos" type="text" name="apellidos" id="apellidos">
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                             <input class="form-control" placeholder="DNI" type="text" name="dni" id="dni">
@@ -71,7 +73,7 @@
                                             <input class="form-control" placeholder="Telefono" type="text" name="telefono" id="telefono">
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control" placeholder="Fecha de Nacimineto" type="text" name="fechanac" id="fechanac">
+                                            <input class="form-control"  type="date" name="fechanacimiento" id="fechanacimiento">
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                             <input class="form-control" placeholder="Direccion" type="text" name="direccion" id="direccion">
@@ -88,7 +90,7 @@
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <a class="send" th:href="@{/correoconfirmar}" style="text-align: center" >Registrarse</a>
+                                                    <button class="send" type="submit" style="text-align: center" >Registrarse</button>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <a class="send" th:href="@{/login}" style="text-align: center">Regresar</a>

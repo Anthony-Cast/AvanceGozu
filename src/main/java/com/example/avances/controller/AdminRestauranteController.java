@@ -1,6 +1,7 @@
 package com.example.avances.controller;
 
 import com.example.avances.entity.Plato;
+import com.example.avances.entity.Usuario;
 import com.example.avances.repository.CuponesRepository;
 import com.example.avances.repository.PlatoRepository;
 import com.example.avances.repository.RestauranteRepository;
@@ -30,12 +31,9 @@ public class AdminRestauranteController {
         return "AdminRestaurantes/login";
     }
 
-
-
-
-
     @GetMapping("/register")
     public String registerAdmin(){
+
         return "AdminRestaurantes/register";
     }
     @PostMapping("/espera")
@@ -103,7 +101,13 @@ public class AdminRestauranteController {
 
     @GetMapping("/correoconfirmar")
     public String correoConfirmar(){
+
         return "AdminRestaurantes/correo";
+    }
+    @PostMapping("/guardaradmin")
+    public String guardarAdmin(Usuario usuario){
+        usuarioRepository.save(usuario);
+        return"AdminRestaurantes/correo";
     }
 
     @GetMapping("/perfil")
