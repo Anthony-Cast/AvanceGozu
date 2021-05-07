@@ -54,38 +54,48 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                <form class="main_form" style="align-self: center" method="post" th:action="@{/guardaradmin}">
+                                <form class="main_form" style="align-self: center" method="post" th:action="@{/guardaradmin}" th:object="${usuario}">
                                     <div style="font-size: 40px;color: black;text-align: center">Llena el siguiente formulario</div>
                                     <br>
                                     <div class="row">
-                                        <input class="form-control" type="hidden" name="rol" id="rol" value="Administrador Restaurante">
-                                        <input class="form-control" type="hidden" name="cuentaactiva" id="cuentaactiva" value="0">
+                                        <input class="form-control" type="hidden" id="rol" name="rol" value="Administrador Restaurante">
+                                        <input class="form-control" type="hidden" id="cuentaactiva" name="cuentaactiva" value="0">
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control" placeholder="Nombre" type="text" name="nombre" id="nombre">
+                                            <div class="text-dark" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                                            <input class="form-control" placeholder="Nombre" type="text" th:field="*{nombre}">
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control" placeholder="Apellidos" type="text" name="apellidos" id="apellidos">
+                                            <div class="text-dark" th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}"></div>
+                                            <input class="form-control" placeholder="Apellidos" type="text" th:field="*{apellidos}">
+
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control" placeholder="DNI" type="text" name="dni" id="dni">
+                                            <div class="text-dark" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></div>
+                                            <input class="form-control" placeholder="DNI" type="text" th:field="*{dni}">
+
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control" placeholder="Telefono" type="text" name="telefono" id="telefono">
+                                            <div class="text-dark" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></div>
+                                            <input class="form-control" placeholder="Telefono" type="text" th:field="*{telefono}">
+
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control"  type="date" name="fechanacimiento" id="fechanacimiento">
+                                            <input class="form-control"  type="date" th:field="*{fechanacimiento}">
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control" placeholder="Direccion" type="text" name="direccion" id="direccion">
+                                            <div class="text-dark" th:if="${#fields.hasErrors('sexo')}" th:errors="*{sexo}"></div>
+                                            <input class="form-control" placeholder="Sexo" type="text" th:field="*{sexo}">
+
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control" placeholder="Sexo" type="text" name="sexo" id="sexo">
+                                            <div class="text-dark" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                                            <input class="form-control" placeholder="Correo" type="text" th:field="*{email}">
+
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control" placeholder="Correo" type="text" name="email" id="email">
-                                        </div>
-                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control" placeholder="Contraseña" type="password" name="contraseniahash" id="contraseniahash">
+                                            <div class="text-dark" th:if="${#fields.hasErrors('contraseniahash')}" th:errors="*{contraseniahash}"></div>
+                                            <input class="form-control" placeholder="Contraseña" type="password" th:field="*{contraseniahash}">
+
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                             <div class="row">

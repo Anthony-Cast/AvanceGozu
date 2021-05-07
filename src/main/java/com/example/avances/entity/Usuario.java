@@ -1,8 +1,11 @@
 package com.example.avances.entity;
 
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.sql.Date;
-import java.time.LocalDateTime;
+
 
 
 
@@ -13,20 +16,32 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idusuario;
     @Column(nullable = false)
+    @NotBlank(message = "No puede estar vacío")
+    @Size(max=45,message = "Los nombres no puede tener más de 45 caracteres")
     private String nombre;
     @Column(nullable = false)
+    @NotBlank(message = "No puede estar vacío")
+    @Size(max=45,message = "Los apellidos no puede tener más de 45 caracteres")
     private String apellidos;
     @Column(nullable = false)
+    @NotBlank(message = "No puede estar vacío")
+    @Size(max=45, message = "El email no puede tener más de 45 caracteres")
     private String email;
     @Column(nullable = false)
+    @NotBlank(message = "No puede estar vacío")
     private String contraseniahash;
     @Column(nullable = false)
+    @NotBlank(message = "No puede estar vacío")
+    @Size(max=9,message = "No puede tener más de 9 dígitos")
     private String telefono;
     @Column(nullable = false)
     private Date fechanacimiento;
     @Column(nullable = false)
+    @NotBlank(message = "No puede estar vacío")
     private String sexo;
     @Column(nullable = false)
+    @NotBlank(message = "No puede estar vacío")
+    @Size(max=8,message = "No puede tenr más de 8 dígitos")
     private String dni;
     private Integer comisionventa;
     @Column(nullable = false)
