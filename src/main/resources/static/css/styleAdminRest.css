@@ -1,0 +1,47 @@
+.send2 {
+    font-family: poppins;
+    float: left;
+    margin: 0 auto;
+    display: block;
+    background: #fff;
+    color: #000;
+    max-width: 250px;
+    padding: 13px 0px;
+    width: 100%;
+    font-size: 18px;
+}
+.send2:hover {
+    background: #000;
+    color: #fff;
+}
+.send3 {
+    font-family: poppins;
+    float: left;
+    margin: 0 auto;
+    display: block;
+    background: #fff;
+    color: #000;
+    max-width: 400px;
+    padding: 13px 0px;
+    width: 100%;
+    font-size: 18px;
+}
+.send3:hover {
+    background: #000;
+    color: #fff;
+}
+.form-control-file {
+      border: #fff solid 2px;
+      border-radius: inherit;
+      margin-bottom: 25px;
+      padding: 15px 20px;
+      font-family: poppins;
+}
+.form-control-file:focus {
+    box-shadow: inherit;
+    border: #fff solid 2px !important;
+}
+.form-control-file:focus {
+    border-color: #ffffff !important;
+    box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .25);
+}
