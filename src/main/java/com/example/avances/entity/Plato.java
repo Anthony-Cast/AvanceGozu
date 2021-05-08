@@ -18,10 +18,6 @@ public class Plato {
     private float precio;
 
     @ManyToOne
-    @JoinColumn(name="cupones_idcupones")
-    private Cupones cupones;
-
-    @ManyToOne
     @JoinColumn(name="restaurante_idrestaurante")
     private Restaurante restaurante;
 
@@ -57,14 +53,6 @@ public class Plato {
 
     public void setPrecio(float precio) {
         this.precio = precio;
-    }
-
-    public Cupones getCupones() {
-        return cupones;
-    }
-
-    public void setCupones(Cupones cupones) {
-        this.cupones = cupones;
     }
 
     public Restaurante getRestaurante() {

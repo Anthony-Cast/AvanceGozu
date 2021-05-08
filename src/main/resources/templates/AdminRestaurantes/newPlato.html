@@ -70,19 +70,6 @@
                                             <input th:field="*{precio}" class="form-control" placeholder="Precio" type="text" name="precio" id="precio">
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" th:if="${plato.idplato}">
-                                            <label for="cupones">Cupon asociado 1</label>
-                                            <select class="form-control" th:field="*{cupones}">
-                                                <option th:each="cupon: ${listaCupones}" th:value="${cupon.idcupones}" th:text="${cupon.nombre}"></option>
-                                            </select>
-                                        </div>
-                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" th:unless="${plato.idplato}">
-                                            <label for="cupones">Cupon asociado 2</label>
-                                            <select class="form-control" th:field="*{cupones}">
-                                                <option th:each="cupon: ${listaCupones}" th:value="${cupon.idcupones}" th:text="${cupon.nombre}"
-                                                        th:selected="${cupon.idcupones == plato.cupones}" style="color: #0b2e13"></option>
-                                            </select>
-                                        </div>
-                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" th:if="${plato.idplato}">
                                             <label for="disponibilidad">Disponible?</label>
                                             <select class="form-control" th:field="*{disponibilidad}">
                                                 <option value="1">Disponible</option>

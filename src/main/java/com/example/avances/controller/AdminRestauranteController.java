@@ -3,7 +3,6 @@ package com.example.avances.controller;
 import com.example.avances.entity.Plato;
 import com.example.avances.entity.Restaurante;
 import com.example.avances.entity.Usuario;
-import com.example.avances.repository.CuponesRepository;
 import com.example.avances.repository.PlatoRepository;
 import com.example.avances.repository.RestauranteRepository;
 import com.example.avances.repository.UsuarioRepository;
@@ -21,10 +20,9 @@ import javax.validation.Valid;
 
 @Controller
 public class AdminRestauranteController {
+
     @Autowired
     PlatoRepository platoRepository;
-    @Autowired
-    CuponesRepository cuponesRepository;
     @Autowired
     UsuarioRepository usuarioRepository;
     @Autowired
@@ -62,10 +60,8 @@ public class AdminRestauranteController {
     @PostMapping("/guardarPlato")
     public String guardarPlato(@ModelAttribute("plato") Plato plato, RedirectAttributes attr, Model model){
         if (plato.getIdplato() == 0) {
-            System.out.println("TRACE1");
             attr.addFlashAttribute("msg", "Plato creado exitosamente");
             platoRepository.save(plato);
-            System.out.println("TRACE2");
             return "redirect:/menu";
         } else {
             platoRepository.save(plato);
@@ -82,7 +78,6 @@ public class AdminRestauranteController {
     @GetMapping("/crearPlato")
     public String crearPlato(@ModelAttribute("plato") Plato plato, Model model){
         model.addAttribute("plato",plato);
-        model.addAttribute("listaCupones",cuponesRepository.findAll());
         return "AdminRestaurantes/newPlato";
     }
 
@@ -123,7 +118,9 @@ public class AdminRestauranteController {
 
     @GetMapping("/menu")
     public String verMenu(Model model){
+        System.out.println("TRACE 1");
         model.addAttribute("listaPlatos", platoRepository.findAll());
+        System.out.println("TRACE 2");
         return "AdminRestaurantes/menu";
     }
 
@@ -138,6 +135,7 @@ public class AdminRestauranteController {
 
         return "AdminRestaurantes/pedidos";
     }
+
     @GetMapping("/reporte")
     public String verReporte(){
         return "AdminRestaurantes/reporte";

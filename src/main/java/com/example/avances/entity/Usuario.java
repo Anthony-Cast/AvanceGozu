@@ -14,7 +14,7 @@ import java.sql.Date;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idusuario;
+    private Integer idusuarios;
     @Column(nullable = false)
     @NotBlank(message = "No puede estar vacío")
     @Size(max=45,message = "Los nombres no puede tener más de 45 caracteres")
@@ -50,11 +50,11 @@ public class Usuario {
     private Date ultimafechaingreso;
 
     public Integer getIdusuario() {
-        return idusuario;
+        return idusuarios;
     }
 
     public void setIdusuario(Integer idusuario) {
-        this.idusuario = idusuario;
+        this.idusuarios = idusuario;
     }
 
     public String getNombre() {

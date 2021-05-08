@@ -119,7 +119,7 @@
                         <div class="owl-carousel owl-theme">
                             <div class="item" th:each="plato : ${listaPlatos}">
                                 <div class="product_blog_img">
-                                    <a th:href="@{/crearPlato}"><img src="images/bembos1.png" alt="#" /></a>
+                                    <a th:href="@{'/edit' + '?idplato=' + ${plato.idplato}}"><img src="images/bembos1.png" alt="#" /></a>
                                 </div>
                                 <div class="product_blog_cont">
                                     <h3 th:text="${plato.nombre}"></h3>
