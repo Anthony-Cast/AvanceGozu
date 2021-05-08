@@ -35,9 +35,11 @@ public class AdminRestauranteController {
     public String registerAdmin(@ModelAttribute("usuario") Usuario usuario){
         return "AdminRestaurantes/register";
     }
-    @PostMapping("/espera")
-    public String esperaConfirmacion(){
-        return "AdminRestaurantes/espera";
+    @PostMapping("/categorias")
+    public String esperaConfirmacion(@ModelAttribute("restaurante") Restaurante restaurante,@RequestParam("categorias")String categorias){
+        System.out.println(categorias);
+        restauranteRepository.save(restaurante);
+        return "AdminRestaurantes/categorias";
     }
 
     @PostMapping("/estado")
@@ -150,8 +152,5 @@ public class AdminRestauranteController {
     public String verReporte(){
         return "AdminRestaurantes/reporte";
     }
-    /*@GetMapping("/prueba")
-    public String verEjemplo(){
-        return "html/recipe";
-    }*/
+
 }
