@@ -31,6 +31,10 @@ public class Cupones {
     @JoinColumn(name="restaurante_idrestaurante")
     private Restaurante restaurante;
 
+    @ManyToOne
+    @JoinColumn(name="idplato")
+    private Plato plato;
+
     public int getIdcupones() {
         return idcupones;
     }
@@ -85,5 +89,13 @@ public class Cupones {
 
     public void setRestaurante(Restaurante restaurante) {
         this.restaurante = restaurante;
+    }
+
+    public Plato getPlato() {
+        return plato;
+    }
+
+    public void setPlato(Plato plato) {
+        this.plato = plato;
     }
 }
