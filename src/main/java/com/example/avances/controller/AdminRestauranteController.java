@@ -1,6 +1,7 @@
 package com.example.avances.controller;
 
 import com.example.avances.entity.Plato;
+import com.example.avances.entity.Restaurante;
 import com.example.avances.entity.Usuario;
 import com.example.avances.repository.CuponesRepository;
 import com.example.avances.repository.PlatoRepository;
@@ -87,12 +88,11 @@ public class AdminRestauranteController {
     }
 
     @GetMapping("/registerRestaurante")
-    public String esperaRestaurante(){
+    public String registerRestaurante(@ModelAttribute("restaurante")Restaurante restaurante){
         return "AdminRestaurantes/registerRestaurante";
     }
-
-    @GetMapping("/estado2")
-    public String estado(){
+    @GetMapping("/sinrestaurante")
+    public String sinRestaurante(){
         return "AdminRestaurantes/restaurante";
     }
 

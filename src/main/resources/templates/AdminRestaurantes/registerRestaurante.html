@@ -59,26 +59,20 @@
                             <div class="col-md-12">
                                 <h2>Llena el siguiente formulario</h2>
                             </div>
-
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-
-                                <form method="post" th:action="@{/espera}" class="main_form">
+                                <form method="post" th:action="@{/espera}" class="main_form" th:object="${restaurante}">
                                     <div class="row">
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input type="hidden" name="correo" id="correo" value="ola" >
-                                            <input class="form-control" placeholder="Nombre del Restaurante" type="text" name="nombre" id="nombre">
+                                            <input class="form-control" placeholder="Nombre del Restaurante" type="text" th:field="*{nombre}">
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control" placeholder="RUC" type="text" name="ruc" id="ruc">
+                                            <input class="form-control" placeholder="RUC" type="text" th:field="*{ruc}">
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control" placeholder="Direccion" type="text" name="direccion" id="direccion">
+                                            <input class="form-control" placeholder="Direccion" type="text" th:field="*{direccion}">
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control" placeholder="Distrito" type="text" name="distrito" id="distrito">
-                                        </div>
-                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control" placeholder="Ubicacion" type="text" name="ubicacion" id="ubicacion">
+                                            <input class="form-control" placeholder="Distrito" type="text" th:field="*{distrito}">
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                             <input class="form-control" placeholder="Categorías" type="text" name="categorias" id="categorias">
