@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 public class AdminRestauranteController {
@@ -78,6 +79,20 @@ public class AdminRestauranteController {
         return "AdminRestaurantes/newPlato";
     }
 
+    @GetMapping("/editarPlato")
+    public String editarPlato(Model model, @RequestParam("idplato") int id, @ModelAttribute("plato") Plato plato){
+
+        Optional<Plato> optionalPlato = platoRepository.findById(id);
+
+        if(optionalPlato.isPresent()){
+            plato = optionalPlato.get();
+            model.addAttribute("plato",plato);
+            return "AdminRestaurantes/newPlato";
+        }else{
+            return "redirect:/menu";
+        }
+    }
+
     @GetMapping("/registerRestaurante")
     public String registerRestaurante(@ModelAttribute("restaurante")Restaurante restaurante){
         return "AdminRestaurantes/registerRestaurante";
@@ -115,9 +130,7 @@ public class AdminRestauranteController {
 
     @GetMapping("/menu")
     public String verMenu(Model model){
-        System.out.println("TRACE 1");
         model.addAttribute("listaPlatos", platoRepository.findAll());
-        System.out.println("TRACE 2");
         return "AdminRestaurantes/menu";
     }
 

@@ -18,6 +18,8 @@
     <!-- owl css -->
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <!-- style css -->
+    <link rel="stylesheet" href="css/styleAdminRest.css">
+    <!-- style css -->
     <link rel="stylesheet" href="css/style.css">
     <!-- responsive-->
     <link rel="stylesheet" href="css/responsive.css">
@@ -106,25 +108,21 @@
             </div>
         </div>
         <!-- section -->
-        <section class="resip_section">
+        <section class="lqq-section">
             <div class="container">
-                <div class="col-md-12">
-                    <div class="title">
-                        <h2 style="color:white">Combos</h2>
-                    </div>
-                </div>
                 <div class="row">
                     <a class="btn btn-primary mt-4 mb-4" th:href="@{/crearPlato}">Nuevo Plato</a>
                     <div class="col-md-12">
                         <div class="owl-carousel owl-theme">
                             <div class="item" th:each="plato : ${listaPlatos}">
                                 <div class="product_blog_img">
-                                    <a th:href="@{'/edit' + '?idplato=' + ${plato.idplato}}"><img src="images/bembos1.png" alt="#" /></a>
+                                    <a th:href="@{'/editarPlato' + '?idplato=' + ${plato.idplato}}"><img src="images/bembos1.png" alt="#" /></a>
                                 </div>
                                 <div class="product_blog_cont">
-                                    <h3 th:text="${plato.nombre}"></h3>
-                                    <h4 th:text="${plato.descripcion}"></h4>
-                                    <h4 th:text="${plato.precio}"><span class="theme_color">S/.</span></h4>
+                                    <h3 style="color: #1f1f1f" th:text="${plato.nombre}"></h3>
+                                    <span style="color: #002752">Descripción:</span><h4 style="color: #1f1f1f" th:text="${plato.descripcion}"></h4>
+                                    <span style="color: #002752">Precio: S/.</span><h4 style="color: #1f1f1f" th:text="${plato.precio}"></h4>
+                                    <span style="color: #002752">Tiene stock?</span><h4 style="color: #1f1f1f" th:text="${plato.disponibilidad == 1? 'Si':'No'}"></h4>
                                 </div>
                             </div>
                         </div>
