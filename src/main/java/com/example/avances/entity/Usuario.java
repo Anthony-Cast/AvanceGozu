@@ -49,12 +49,12 @@ public class Usuario {
     private Integer cuentaactiva;
     private Date ultimafechaingreso;
 
-    public Integer getIdusuario() {
+    public Integer getIdusuarios() {
         return idusuarios;
     }
 
-    public void setIdusuario(Integer idusuario) {
-        this.idusuarios = idusuario;
+    public void setIdusuarios(Integer idusuarios) {
+        this.idusuarios = idusuarios;
     }
 
     public String getNombre() {
