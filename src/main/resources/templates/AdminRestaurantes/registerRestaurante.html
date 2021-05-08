@@ -62,7 +62,7 @@
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                                 <form method="post" th:action="@{/categorias}" class="main_form" th:object="${restaurante}">
                                     <div class="row">
-                                        <input class="form-control" type="hidden" th:field="*{usuario.idusuarios}" th:value="${14}">
+                                        <input class="form-control" type="hidden" th:field="*{usuario}">
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                             <input class="form-control" placeholder="Nombre del Restaurante" type="text" th:field="*{nombre}">
                                         </div>

@@ -111,7 +111,8 @@
         <section class="lqq-section">
             <div class="container">
                 <div class="row">
-                    <a class="btn btn-primary mt-4 mb-4" th:href="@{/crearPlato}">Nuevo Plato</a>
+                    <a class="send" style="text-align: center; margin-left: 15px" th:href="@{/crearPlato}">Nuevo Plato</a>
+                    <a class="btn btn-primary mt-4 mb-4" th:href="@{/registerRestaurante}">Nuevo Plato</a>
                     <div class="col-md-12">
                         <div class="owl-carousel owl-theme">
                             <div class="item" th:each="plato : ${listaPlatos}">
@@ -123,6 +124,7 @@
                                     <span style="color: #002752">Descripción:</span><h4 style="color: #1f1f1f" th:text="${plato.descripcion}"></h4>
                                     <span style="color: #002752">Precio: S/.</span><h4 style="color: #1f1f1f" th:text="${plato.precio}"></h4>
                                     <span style="color: #002752">Tiene stock?</span><h4 style="color: #1f1f1f" th:text="${plato.disponibilidad == 1? 'Si':'No'}"></h4>
+                                    <a class="btn btn-light mt-4 mb-4" th:href="@{'/borrarPlato' + '?idplato=' + ${plato.idplato}}">Borrar plato</a>
                                 </div>
                             </div>
                         </div>

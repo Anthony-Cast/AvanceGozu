@@ -35,11 +35,12 @@ public class AdminRestauranteController {
     public String registerAdmin(@ModelAttribute("usuario") Usuario usuario){
         return "AdminRestaurantes/register";
     }
+
     @PostMapping("/categorias")
     public String esperaConfirmacion(@ModelAttribute("restaurante") Restaurante restaurante,@RequestParam("categorias")String categorias){
         System.out.println(categorias);
         restauranteRepository.save(restaurante);
-        return "AdminRestaurantes/categorias";
+        return "AdminRestaurantes/espera";
     }
 
     @PostMapping("/estado")
@@ -95,10 +96,27 @@ public class AdminRestauranteController {
         }
     }
 
+    @GetMapping("/borrarPlato")
+    public String borrarPlato(Model model, @RequestParam("idplato") int id, RedirectAttributes attr){
+
+        Optional<Plato> optionalPlato = platoRepository.findById(id);
+
+        if(optionalPlato.isPresent()){
+            platoRepository.deleteById(id);
+            attr.addFlashAttribute("msg", "Producto borrado exitosamente");
+        }
+        return "redirect:/menu";
+    }
+
     @GetMapping("/registerRestaurante")
-    public String registerRestaurante(@ModelAttribute("restaurante")Restaurante restaurante){
+    public String registerRestaurante(@ModelAttribute("restaurante")Restaurante restaurante, Model model){
+        Usuario usuario = new Usuario();
+        usuario.setIdusuarios(14);
+        restaurante.setUsuario(usuario);
+        model.addAttribute("restaurante",restaurante);
         return "AdminRestaurantes/registerRestaurante";
     }
+
     @GetMapping("/sinrestaurante")
     public String sinRestaurante(){
         return "AdminRestaurantes/restaurante";

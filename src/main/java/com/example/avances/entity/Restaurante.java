@@ -19,7 +19,8 @@ public class Restaurante {
     @Column(nullable = false)
     private String nombre;
     private Float calificacionpromedio;
-    @OneToOne
+
+    @ManyToOne
     @JoinColumn(name="idadminrest")
     private Usuario usuario;
     private Byte foto;
