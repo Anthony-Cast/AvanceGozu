@@ -62,16 +62,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="cupon: ${listaCupones}">
+                            <tr th:each="cupon,iterStat: ${listaCupones}">
                                 <td th:text="${cupon.nombre}"></td>
                                 <td th:text="${cupon.descripcion}"></td>
                                 <td th:text="${cupon.valordescuento}"></td>
-                                <td th:text="${cupon.fechainicio}"></td>
-                                <td th:text="${cupon.fechafin}"></td>
+                                <td th:text="${#dates.format(cupon.fechainicio,'dd-MM-yyyy')}"></td>
+                                <td th:text="${#dates.format(cupon.fechafin,'dd-MM-yyyy')}"></td>
                                 <td th:text="${cupon.plato.nombre}"></td>
-                                <td>Si</td>
-                                <td><a class="btn btn-primary" th:href="@{/crearCupon}">Editar cupon</a></td>
-                                <td><a class="btn btn-danger" th:href="@{/perfil}">Borrar cupon</a></td>
+                                <td th:text="${listaDisponibilidad[__${iterStat.index}__]}">nada</td>
+                                <td><a class="btn btn-primary" th:href="@{'/editarCupon' + '?idcupon=' + ${cupon.idcupones}}">Editar cupon</a></td>
+                                <td><a class="btn btn-danger"  th:href="@{'/borrarCupon' + '?idcupon=' + ${cupon.idcupones}}">Borrar cupon</a></td>
                             </tr>
                             </tbody>
                         </table>

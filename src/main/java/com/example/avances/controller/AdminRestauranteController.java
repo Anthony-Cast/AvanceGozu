@@ -15,7 +15,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.swing.text.html.Option;
 import javax.validation.Valid;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,12 +63,6 @@ public class AdminRestauranteController {
         return "redirect:/login";
     }
 
-    @PostMapping("/guardarCupon")
-    public String guardarCupon(){
-
-        return "AdminRestaurantes/cupones";
-    }
-
     @PostMapping("/guardarPlato")
     public String guardarPlato(@ModelAttribute("plato") Plato plato, RedirectAttributes attr, Model model){
         if (plato.getIdplato() == 0) {
@@ -74,11 +74,6 @@ public class AdminRestauranteController {
             attr.addFlashAttribute("msg", "Plato actualizado exitosamente");
             return "redirect:/menu";
         }
-    }
-    @GetMapping("/crearCupon")
-    public String crearCupon(){
-
-        return "AdminRestaurantes/generarCupon";
     }
 
     @GetMapping("/crearPlato")
@@ -102,7 +97,7 @@ public class AdminRestauranteController {
     }
 
     @GetMapping("/borrarPlato")
-    public String borrarPlato(Model model, @RequestParam("idplato") int id, RedirectAttributes attr){
+    public String borrarPlato(@RequestParam("idplato") int id, RedirectAttributes attr){
 
         Optional<Plato> optionalPlato = platoRepository.findById(id);
 
@@ -161,11 +156,91 @@ public class AdminRestauranteController {
 
     @GetMapping("/cupones")
     public String verCupones(Model model, @RequestParam(value = "idrestaurante", required = false) Integer idrestaurante){
-
+        idrestaurante = 1;
         List<Cupones> listaCupones = cuponesRepository.buscarCuponesPorIdRestaurante(idrestaurante);
+        List<String> listaDisponibilidad = new ArrayList<String>();
+
+        for (Cupones i: listaCupones){
+            Date inicio = i.getFechainicio();
+            Date fin = i.getFechafin();
+            Date ahora = Date.valueOf(LocalDate.now());
+
+            if(inicio.compareTo(ahora) > 0){
+                listaDisponibilidad.add("No");
+            }else if(fin.compareTo(ahora) < 0){
+                listaDisponibilidad.add("No");
+            }else if((inicio.compareTo(ahora) < 0) && (fin.compareTo(ahora) > 0)){
+                listaDisponibilidad.add("Si");
+            }else{
+                listaDisponibilidad.add("No");
+            }
+
+        }
+
         model.addAttribute("listaCupones", listaCupones);
+        model.addAttribute("listaDisponibilidad", listaDisponibilidad);
         return "AdminRestaurantes/cupones";
 
+    }
+
+    @GetMapping("/crearCupon")
+    public String crearCupon(@ModelAttribute("cupon") Cupones cupon, Model model){
+        int idrestaurante = 1;
+        Restaurante restaurante = new Restaurante();
+        restaurante.setIdrestaurante(idrestaurante);
+        cupon.setRestaurante(restaurante);
+        model.addAttribute("cupon",cupon);
+        List<Plato> listaPlatos = platoRepository.buscarPlatosPorIdRestaurante(idrestaurante);
+        model.addAttribute("listaPlatos",listaPlatos);
+        return "AdminRestaurantes/generarCupon";
+    }
+
+    @GetMapping("/editarCupon")
+    public String editarCupon(@ModelAttribute("cupon") Cupones cupon, @RequestParam("idcupon") int id, Model model){
+
+        Optional<Cupones> optCupon = cuponesRepository.findById(id);
+
+        if(optCupon.isPresent()){
+            cupon = optCupon.get();
+            Restaurante restaurante = cupon.getRestaurante();
+            int idrestaurante = restaurante.getIdrestaurante();
+            model.addAttribute("cupon",cupon);
+            List<Plato> listaPlatos = platoRepository.buscarPlatosPorIdRestaurante(idrestaurante);
+            model.addAttribute("listaPlatos",listaPlatos);
+            return "AdminRestaurantes/generarCupon";
+        }else{
+            return "redirect:/cupones";
+        }
+    }
+
+    @GetMapping("/borrarCupon")
+    public String borrarCupon(@RequestParam("idcupon") int id, RedirectAttributes attr){
+
+        Optional<Cupones> optCupon = cuponesRepository.findById(id);
+
+        if(optCupon.isPresent()){
+            cuponesRepository.deleteById(id);
+            attr.addFlashAttribute("msg", "Cupon borrado exitosamente");
+            return "redirect:/cupones";
+        }else{
+            return "redirect:/cupones";
+        }
+    }
+
+    @PostMapping("/guardarCupon")
+    public String guardarCupon(@ModelAttribute("cupon") Cupones cupon, RedirectAttributes attr,
+                               Model model){
+
+        if (cupon.getIdcupones() == 0) {
+            cuponesRepository.save(cupon);
+            attr.addFlashAttribute("msg", "Cupon creado exitosamente");
+            return "redirect:/cupones";
+
+        } else {
+            cuponesRepository.save(cupon);
+            attr.addFlashAttribute("msg", "Cupon actualizado exitosamente");
+            return "redirect:/cupones";
+        }
     }
 
     @GetMapping("/pedidos")
