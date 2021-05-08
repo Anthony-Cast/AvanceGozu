@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <!-- site metas -->
-    <title>Spicyo   </title>
+    <title>Spicyo</title>
     <!-- bootstrap css -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- owl css -->
@@ -68,13 +68,13 @@
                                 </div>
                                 <div style="font-size: 40px;color: black;text-align: center">o</div>
                                 <div></div>
-                                <form class="main_formy" style="align-self: center">
+                                <form class="main_formy" method="post" th:action="@{/processLogin}" style="align-self: center">
                                     <div class="row">
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control" placeholder="Correo" type="text" name="correo">
+                                            <input class="form-control" placeholder="Correo" type="text" name="username">
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control" placeholder="Contraseña" type="password" name="contraseña">
+                                            <input class="form-control" placeholder="Contraseña" type="password" name="password">
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                             <a th:href="@{/correoconfirmar}">Olvidé mi contraseña</a>
@@ -82,7 +82,7 @@
                                         </br>
                                         </br>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <a style="text-align: center" class="send" th:href="@{/registerRestaurante}">Ingresar</a>
+                                            <button style="text-align: center" class="send" type="submit">Ingresar</button>
                                         </div>
                                     </div>
                                 </form>
