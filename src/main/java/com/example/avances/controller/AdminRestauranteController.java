@@ -73,7 +73,6 @@ public class AdminRestauranteController {
             return "redirect:/menu";
         }
     }
-
     @GetMapping("/crearCupon")
     public String crearCupon(){
 
@@ -139,7 +138,10 @@ public class AdminRestauranteController {
 
         return "AdminRestaurantes/pedidos";
     }
-
+    @GetMapping("/reporte")
+    public String verReporte(){
+        return "AdminRestaurantes/reporte";
+    }
     /*@GetMapping("/prueba")
     public String verEjemplo(){
         return "html/recipe";
