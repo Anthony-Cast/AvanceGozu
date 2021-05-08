@@ -28,7 +28,7 @@ public class AdminRestauranteController {
     @Autowired
     RestauranteRepository restauranteRepository;
 
-    @GetMapping("/login")
+    @GetMapping("/loginadmin")
     public String loginAdmin(){
         return "AdminRestaurantes/login";
     }
