@@ -48,34 +48,6 @@
     <!-- blog -->
     <div class="blog">
       <div class="container">
-        <h1>Ingresos mensuales</h1>
-        <div class="row table-users">
-          <!-- table -->
-          <div class="col-md-12">
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead >
-                <tr>
-                  <th scope="col">Mes</th>
-                  <th scope="col">Anio</th>
-                  <th scope="col">Ganancia (S/.)</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="g: ${listaGanancias}">
-                  <td th:text="${g.getmes()}"></td>
-                  <td th:text="${g.getanio()}"></td>
-                  <td th:text="${g.getganancia()}"></td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <!-- end of table -->
-
-        </div>
-      </div>
-      <div class="container">
         <h1>Historial de pedidos</h1>
         <form class="form-group mb-3" method="post" th:action="@{/buscarReporte}">
           <div class="input-group-text">
@@ -118,8 +90,84 @@
 
         </div>
       </div>
-
-
+      <div class="container">
+        <h1>Ingresos mensuales</h1>
+        <div class="row table-users">
+          <!-- table -->
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead >
+                <tr>
+                  <th scope="col">Mes</th>
+                  <th scope="col">Anio</th>
+                  <th scope="col">Ganancia (S/.)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="g: ${listaGanancias}">
+                  <td th:text="${g.getmes()}"></td>
+                  <td th:text="${g.getanio()}"></td>
+                  <td th:text="${g.getganancia()}"></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <h1>Top 5 platos mas vendidos</h1>
+        <div class="row table-users">
+          <!-- table -->
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead >
+                <tr>
+                  <th scope="col">Nombre del plato</th>
+                  <th scope="col">Cantidad vendida</th>
+                  <th scope="col">Ganancia por plato(S/.)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p: ${platosTop5}">
+                  <td th:text="${p.getnombreplato()}"></td>
+                  <td th:text="${p.getcantidad()}"></td>
+                  <td th:text="${p.getganancia()}"></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <h1>Top 5 platos menos vendidos</h1>
+        <div class="row table-users">
+          <!-- table -->
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead >
+                <tr>
+                  <th scope="col">Nombre del plato</th>
+                  <th scope="col">Cantidad vendida</th>
+                  <th scope="col">Ganancia por plato(S/.)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p: ${platosNoTop5}">
+                  <td th:text="${p.getnombreplato()}"></td>
+                  <td th:text="${p.getcantidad()}"></td>
+                  <td th:text="${p.getganancia()}"></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <!-- end blog -->

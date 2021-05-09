@@ -3,6 +3,7 @@ package com.example.avances.repository;
 import com.example.avances.dto.PedidosAdminRestDto;
 import com.example.avances.dto.PedidosGananciaMesDto;
 import com.example.avances.dto.PedidosReporteDto;
+import com.example.avances.dto.PedidosTop5Dto;
 import com.example.avances.entity.Pedidos;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -34,7 +35,7 @@ public interface PedidosRepository extends JpaRepository<Pedidos,Integer> {
             "inner join pedidos_has_plato pl on pl.pedidos_idpedidos = p.idpedidos\n" +
             "inner join plato pt on pt.idplato = pl.plato_idplato\n" +
             "where p.estadorestaurante = 'entregado'and p.restaurante_idrestaurante = ?1\n" +
-            "order by fechahorapedido asc", nativeQuery = true)
+            "order by p.fechahorapedido asc", nativeQuery = true)
     List<PedidosReporteDto> listaPedidosReporteporFechamasantigua(Integer id);
 
     @Query(value = "select\n" +
@@ -57,7 +58,7 @@ public interface PedidosRepository extends JpaRepository<Pedidos,Integer> {
             "            or u.nombre like %?1% or u.apellidos like %?1%\n" +
             "            or p.montototal like %?1% or pt.nombre like %?1%\n" +
             "            or m.metodo like %?1% or d.distrito like %?1%)\n" +
-            "    order by fechahorapedido asc", nativeQuery = true)
+            "    order by p.fechahorapedido asc", nativeQuery = true)
     List<PedidosReporteDto> buscarPorReporte(String name, Integer id);
 
     @Query(value = "select \n" +
@@ -67,5 +68,23 @@ public interface PedidosRepository extends JpaRepository<Pedidos,Integer> {
             "group by MONTHNAME(p.fechahorapedido)", nativeQuery = true)
     List<PedidosGananciaMesDto> gananciaPorMes(Integer id);
 
+    @Query(value="select pt.nombre as nombreplato,\n" +
+            "count(pl.plato_idplato) as cantidad,\n" +
+            "sum(p.montototal) as ganancia\n" +
+            "from plato pt\n" +
+            "inner join pedidos_has_plato pl on pl.plato_idplato = pt.idplato\n" +
+            "inner join pedidos p on p.idpedidos = pl.pedidos_idpedidos\n" +
+            "where p.restaurante_idrestaurante = ?1\n" +
+            "group by pt.nombre order by cantidad desc limit 5",nativeQuery = true)
+    List<PedidosTop5Dto> platosMasVendidos(Integer id);
 
+    @Query(value="select pt.nombre as nombreplato,\n" +
+            "count(pl.plato_idplato) as cantidad,\n" +
+            "sum(p.montototal) as ganancia\n" +
+            "from plato pt\n" +
+            "inner join pedidos_has_plato pl on pl.plato_idplato = pt.idplato\n" +
+            "inner join pedidos p on p.idpedidos = pl.pedidos_idpedidos\n" +
+            "where p.restaurante_idrestaurante = ?1\n" +
+            "group by pt.nombre order by cantidad asc limit 5;",nativeQuery = true)
+    List<PedidosTop5Dto> platosMenosVendidos(Integer id);
 }

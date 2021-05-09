@@ -265,6 +265,8 @@ public class AdminRestauranteController {
         Integer id = 1;
         model.addAttribute("listaPedidosPorFecha",pedidosRepository.listaPedidosReporteporFechamasantigua(id));
         model.addAttribute("listaGanancias",pedidosRepository.gananciaPorMes(id));
+        model.addAttribute("platosTop5",pedidosRepository.platosMasVendidos(id));
+        model.addAttribute("platosNoTop5",pedidosRepository.platosMenosVendidos(id));
         return "AdminRestaurantes/reporte";
     }
 
@@ -273,6 +275,8 @@ public class AdminRestauranteController {
         Integer id = 1;
         model.addAttribute("listaPedidosPorFecha",pedidosRepository.buscarPorReporte(name,id));
         model.addAttribute("listaGanancias",pedidosRepository.gananciaPorMes(id));
+        model.addAttribute("platosTop5",pedidosRepository.platosMasVendidos(id));
+        model.addAttribute("platosNoTop5",pedidosRepository.platosMenosVendidos(id));
         return "AdminRestaurantes/reporte";
     }
 }
