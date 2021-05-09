@@ -2,7 +2,8 @@ package com.example.avances.entity;
 
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
+
 
 @Entity
 @Table(name="cupones")
@@ -30,6 +31,10 @@ public class Cupones {
     @ManyToOne
     @JoinColumn(name="restaurante_idrestaurante")
     private Restaurante restaurante;
+
+    @ManyToOne
+    @JoinColumn(name="idplato")
+    private Plato plato;
 
     public int getIdcupones() {
         return idcupones;
@@ -85,5 +90,13 @@ public class Cupones {
 
     public void setRestaurante(Restaurante restaurante) {
         this.restaurante = restaurante;
+    }
+
+    public Plato getPlato() {
+        return plato;
+    }
+
+    public void setPlato(Plato plato) {
+        this.plato = plato;
     }
 }
