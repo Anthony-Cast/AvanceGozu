@@ -26,8 +26,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,51 +79,6 @@ public class AdminRestauranteController {
         return "redirect:/login";
     }
 
-    @PostMapping("/guardarPlato")
-    public String guardarPlato(@ModelAttribute("plato") Plato plato, RedirectAttributes attr, Model model){
-        if (plato.getIdplato() == 0) {
-            attr.addFlashAttribute("msg", "Plato creado exitosamente");
-            platoRepository.save(plato);
-            return "redirect:/menu";
-        } else {
-            platoRepository.save(plato);
-            attr.addFlashAttribute("msg", "Plato actualizado exitosamente");
-            return "redirect:/menu";
-        }
-    }
-
-    @GetMapping("/crearPlato")
-    public String crearPlato(@ModelAttribute("plato") Plato plato, Model model){
-        model.addAttribute("plato",plato);
-        return "AdminRestaurantes/newPlato";
-    }
-
-    @GetMapping("/editarPlato")
-    public String editarPlato(Model model, @RequestParam("idplato") int id, @ModelAttribute("plato") Plato plato){
-
-        Optional<Plato> optionalPlato = platoRepository.findById(id);
-
-        if(optionalPlato.isPresent()){
-            plato = optionalPlato.get();
-            model.addAttribute("plato",plato);
-            return "AdminRestaurantes/newPlato";
-        }else{
-            return "redirect:/menu";
-        }
-    }
-
-    @GetMapping("/borrarPlato")
-    public String borrarPlato(@RequestParam("idplato") int id, RedirectAttributes attr){
-
-        Optional<Plato> optionalPlato = platoRepository.findById(id);
-
-        if(optionalPlato.isPresent()){
-            platoRepository.deleteById(id);
-            attr.addFlashAttribute("msg", "Producto borrado exitosamente");
-        }
-        return "redirect:/menu";
-    }
-
     @GetMapping("/registerRestaurante")
     public String registerRestaurante(@ModelAttribute("restaurante")Restaurante restaurante, Model model){
         Usuario usuario = new Usuario();
@@ -167,16 +125,70 @@ public class AdminRestauranteController {
         }
         return null;
     }
+    /************************PERFIL************************/
+
     @GetMapping("/perfil")
-    public String perfilRestaurante(){
+    public String perfilRestaurante(Model model){
+        Integer id = 1;
+        model.addAttribute("calificacion",pedidosRepository.calificacionPromedio(id));
         return "AdminRestaurantes/perfilrestaurante";
     }
 
+    /************************PLATOS************************/
+
     @GetMapping("/menu")
     public String verMenu(Model model){
-        model.addAttribute("listaPlatos", platoRepository.findAll());
+        Integer idrestaurante = 1;
+        model.addAttribute("listaPlatos", platoRepository.buscarPlatosPorIdRestaurante(idrestaurante));
         return "AdminRestaurantes/menu";
     }
+
+    @GetMapping("/crearPlato")
+    public String crearPlato(@ModelAttribute("plato") Plato plato, Model model){
+        model.addAttribute("plato",plato);
+        return "AdminRestaurantes/newPlato";
+    }
+
+    @GetMapping("/editarPlato")
+    public String editarPlato(Model model, @RequestParam("idplato") int id, @ModelAttribute("plato") Plato plato){
+
+        Optional<Plato> optionalPlato = platoRepository.findById(id);
+
+        if(optionalPlato.isPresent()){
+            plato = optionalPlato.get();
+            model.addAttribute("plato",plato);
+            return "AdminRestaurantes/newPlato";
+        }else{
+            return "redirect:/menu";
+        }
+    }
+
+    @PostMapping("/guardarPlato")
+    public String guardarPlato(@ModelAttribute("plato") Plato plato, RedirectAttributes attr, Model model){
+        if (plato.getIdplato() == 0) {
+            attr.addFlashAttribute("msg", "Plato creado exitosamente");
+            platoRepository.save(plato);
+            return "redirect:/menu";
+        } else {
+            platoRepository.save(plato);
+            attr.addFlashAttribute("msg", "Plato actualizado exitosamente");
+            return "redirect:/menu";
+        }
+    }
+
+    @GetMapping("/borrarPlato")
+    public String borrarPlato(@RequestParam("idplato") int id, RedirectAttributes attr){
+
+        Optional<Plato> optionalPlato = platoRepository.findById(id);
+
+        if(optionalPlato.isPresent()){
+            platoRepository.deleteById(id);
+            attr.addFlashAttribute("msg", "Producto borrado exitosamente");
+        }
+        return "redirect:/menu";
+    }
+
+    /************************CUPONES************************/
 
     @GetMapping("/cupones")
     public String verCupones(Model model, @RequestParam(value = "idrestaurante", required = false) Integer idrestaurante){
@@ -264,15 +276,49 @@ public class AdminRestauranteController {
         }
     }
 
+    /************************PEDIDOS************************/
+
     @GetMapping("/pedidos")
     public String verPedidos(Model model){
-
         model.addAttribute("listaPedidos",pedidosRepository.listaPedidos());
         return "AdminRestaurantes/pedidos";
     }
 
+    /************************CALIFICACIONES************************/
+
+    @GetMapping("/calificaciones")
+    public String verCalificaciones(Model model){
+        Integer id = 1;
+        model.addAttribute("listaCalificacion",pedidosRepository.comentariosUsuarios(id));
+        return "AdminRestaurantes/calificaciones";
+    }
+
+    @PostMapping("/buscarCalificaciones")
+    public String buscarCalificaciones(@RequestParam("name") String name, Model model){
+        Integer id = 1;
+        model.addAttribute("listaCalificacion",pedidosRepository.buscarComentariosUsuarios(name,id));
+        return "AdminRestaurantes/calificaciones";
+    }
+
+    /************************REPORTE************************/
+
     @GetMapping("/reporte")
-    public String verReporte(){
+    public String verReporte(Model model){
+        Integer id = 1;
+        model.addAttribute("listaPedidosPorFecha",pedidosRepository.listaPedidosReporteporFechamasantigua(id));
+        model.addAttribute("listaGanancias",pedidosRepository.gananciaPorMes(id));
+        model.addAttribute("platosTop5",pedidosRepository.platosMasVendidos(id));
+        model.addAttribute("platosNoTop5",pedidosRepository.platosMenosVendidos(id));
+        return "AdminRestaurantes/reporte";
+    }
+
+    @PostMapping("/buscarReporte")
+    public String searchReporte(@RequestParam("name") String name, Model model) {
+        Integer id = 1;
+        model.addAttribute("listaPedidosPorFecha",pedidosRepository.buscarPorReporte(name,id));
+        model.addAttribute("listaGanancias",pedidosRepository.gananciaPorMes(id));
+        model.addAttribute("platosTop5",pedidosRepository.platosMasVendidos(id));
+        model.addAttribute("platosNoTop5",pedidosRepository.platosMenosVendidos(id));
         return "AdminRestaurantes/reporte";
     }
 

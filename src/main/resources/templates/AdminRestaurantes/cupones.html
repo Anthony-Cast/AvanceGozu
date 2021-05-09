@@ -43,11 +43,11 @@
         </div>
     </header>
     <footer>
-        <div class="media-body">
-            <div class="footer">
-                <div class="container">
-                    <div class="col-md-12">
-                        <table class="table-bordered">
+        <div class="blog">
+            <div class="row table-users">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
                             <thead>
                             <tr>
                                 <th scope="col">Nombre del cupon</th>
@@ -67,7 +67,7 @@
                                 <td th:text="${cupon.descripcion}"></td>
                                 <td th:text="${cupon.valordescuento}"></td>
                                 <td th:text="${#dates.format(cupon.fechainicio,'dd-MM-yyyy')}"></td>
-                                <td th:text="${#dates.format(cupon.fechafin,'dd-MM-yyyy')}"></td>
+                                <td th:text="${cupon.fechafin}"></td>
                                 <td th:text="${cupon.plato.nombre}"></td>
                                 <td th:text="${listaDisponibilidad[__${iterStat.index}__]}">nada</td>
                                 <td><a class="btn btn-primary" th:href="@{'/editarCupon' + '?idcupon=' + ${cupon.idcupones}}">Editar cupon</a></td>
