@@ -99,4 +99,9 @@ public interface PedidosRepository extends JpaRepository<Pedidos,Integer> {
             "and p.calificacionrestaurante like %?1%\n" +
             "order by p.calificacionrestaurante desc", nativeQuery = true)
     List<ComentariosDto>buscarComentariosUsuarios(String name, Integer id);
+
+    @Query(value="select \n" +
+            "avg(p.calificacionrestaurante) as calificacionpromedio\n" +
+            "from pedidos p where p.restaurante_idrestaurante = 1", nativeQuery = true)
+    List<AvgCalifDto>calificacionPromedio(Integer id);
 }

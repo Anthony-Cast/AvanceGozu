@@ -101,7 +101,9 @@ public class AdminRestauranteController {
     /************************PERFIL************************/
 
     @GetMapping("/perfil")
-    public String perfilRestaurante(){
+    public String perfilRestaurante(Model model){
+        Integer id = 1;
+        model.addAttribute("calificacion",pedidosRepository.calificacionPromedio(id));
         return "AdminRestaurantes/perfilrestaurante";
     }
 
