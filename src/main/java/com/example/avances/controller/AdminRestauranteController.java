@@ -1,7 +1,6 @@
 package com.example.avances.controller;
 
 import com.example.avances.entity.Cupones;
-import com.example.avances.entity.Pedidos;
 import com.example.avances.entity.Plato;
 import com.example.avances.entity.Restaurante;
 import com.example.avances.entity.Usuario;
@@ -17,14 +16,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.List;
 import java.util.Optional;
 
@@ -259,14 +254,24 @@ public class AdminRestauranteController {
 
     @GetMapping("/pedidos")
     public String verPedidos(Model model){
-
         model.addAttribute("listaPedidos",pedidosRepository.listaPedidos());
         return "AdminRestaurantes/pedidos";
     }
 
+    /************************REPORTE************************/
+
     @GetMapping("/reporte")
-    public String verReporte(){
+    public String verReporte(Model model){
+        Integer id = 1;
+        model.addAttribute("listaPedidosPorFecha",pedidosRepository.listaPedidosReporteporFechamasantigua(id));
         return "AdminRestaurantes/reporte";
     }
 
+    @PostMapping("/buscarReporte")
+    public String searchReporte(@RequestParam("name") String name, Model model) {
+        Integer id = 1;
+        model.addAttribute("listaPedidosPorFecha",pedidosRepository.buscarPorReporte(name,id));
+        model.addAttribute("gananciaPorMes",pedidosRepository.gananciaPorMes(id));
+        return "AdminRestaurantes/reporte";
+    }
 }
