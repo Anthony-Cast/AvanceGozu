@@ -360,4 +360,8 @@ public class AdminRestauranteController {
         pedidosRepository.save(optional.get());
         return"redirect:/preparacion";
     }
+    @GetMapping("/cuentaAdmin")
+    public String cuenta(){
+        return "AdminRestaurantes/cuenta";
+    }
 }

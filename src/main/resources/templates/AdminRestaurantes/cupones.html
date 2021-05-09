@@ -35,13 +35,44 @@
 </div>
 -->
 <div class="wrapper">
-    <header>
-        <div class="container-fluid" >
-            <div style="text-align: center">
-                <h2 style="color: white;font-size: xx-large">Mis cupones</h2>
+    <div class="sidebar">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+
+            <div id="dismiss">
+                <i class="fa fa-arrow-left"></i>
             </div>
-        </div>
-    </header>
+        </nav>
+    </div>
+
+    <div id="content">
+        <!-- header -->
+        <header>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="full">
+                            <a class="logo" href="index.html"><img src="images/logo.png" alt="#" /></a>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="full">
+                            <div class="right_header_info">
+                                <ul>
+                                    <!-- TODO -->
+                                    <li class="button_user"><a class="button active" th:href="@{/cuentaAdmin}">Mi cuenta</a><a class="button" th:href="@{/login}">Logout</a></li>
+                                    <li>
+                                        <button type="button" id="sidebarCollapse">
+                                            <img src="images/menu_icon.png" alt="#">
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
     <footer>
         <div class="blog">
             <div class="row table-users">
