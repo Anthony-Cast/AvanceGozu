@@ -68,51 +68,6 @@ public class AdminRestauranteController {
         return "redirect:/login";
     }
 
-    @PostMapping("/guardarPlato")
-    public String guardarPlato(@ModelAttribute("plato") Plato plato, RedirectAttributes attr, Model model){
-        if (plato.getIdplato() == 0) {
-            attr.addFlashAttribute("msg", "Plato creado exitosamente");
-            platoRepository.save(plato);
-            return "redirect:/menu";
-        } else {
-            platoRepository.save(plato);
-            attr.addFlashAttribute("msg", "Plato actualizado exitosamente");
-            return "redirect:/menu";
-        }
-    }
-
-    @GetMapping("/crearPlato")
-    public String crearPlato(@ModelAttribute("plato") Plato plato, Model model){
-        model.addAttribute("plato",plato);
-        return "AdminRestaurantes/newPlato";
-    }
-
-    @GetMapping("/editarPlato")
-    public String editarPlato(Model model, @RequestParam("idplato") int id, @ModelAttribute("plato") Plato plato){
-
-        Optional<Plato> optionalPlato = platoRepository.findById(id);
-
-        if(optionalPlato.isPresent()){
-            plato = optionalPlato.get();
-            model.addAttribute("plato",plato);
-            return "AdminRestaurantes/newPlato";
-        }else{
-            return "redirect:/menu";
-        }
-    }
-
-    @GetMapping("/borrarPlato")
-    public String borrarPlato(@RequestParam("idplato") int id, RedirectAttributes attr){
-
-        Optional<Plato> optionalPlato = platoRepository.findById(id);
-
-        if(optionalPlato.isPresent()){
-            platoRepository.deleteById(id);
-            attr.addFlashAttribute("msg", "Producto borrado exitosamente");
-        }
-        return "redirect:/menu";
-    }
-
     @GetMapping("/registerRestaurante")
     public String registerRestaurante(@ModelAttribute("restaurante")Restaurante restaurante, Model model){
         Usuario usuario = new Usuario();
@@ -148,16 +103,68 @@ public class AdminRestauranteController {
         return"AdminRestaurantes/correo";
     }
 
+    /************************PERFIL************************/
+
     @GetMapping("/perfil")
     public String perfilRestaurante(){
         return "AdminRestaurantes/perfilrestaurante";
     }
 
+    /************************PLATOS************************/
+
     @GetMapping("/menu")
     public String verMenu(Model model){
-        model.addAttribute("listaPlatos", platoRepository.findAll());
+        Integer idrestaurante = 1;
+        model.addAttribute("listaPlatos", platoRepository.buscarPlatosPorIdRestaurante(idrestaurante));
         return "AdminRestaurantes/menu";
     }
+
+    @GetMapping("/crearPlato")
+    public String crearPlato(@ModelAttribute("plato") Plato plato, Model model){
+        model.addAttribute("plato",plato);
+        return "AdminRestaurantes/newPlato";
+    }
+
+    @GetMapping("/editarPlato")
+    public String editarPlato(Model model, @RequestParam("idplato") int id, @ModelAttribute("plato") Plato plato){
+
+        Optional<Plato> optionalPlato = platoRepository.findById(id);
+
+        if(optionalPlato.isPresent()){
+            plato = optionalPlato.get();
+            model.addAttribute("plato",plato);
+            return "AdminRestaurantes/newPlato";
+        }else{
+            return "redirect:/menu";
+        }
+    }
+
+    @PostMapping("/guardarPlato")
+    public String guardarPlato(@ModelAttribute("plato") Plato plato, RedirectAttributes attr, Model model){
+        if (plato.getIdplato() == 0) {
+            attr.addFlashAttribute("msg", "Plato creado exitosamente");
+            platoRepository.save(plato);
+            return "redirect:/menu";
+        } else {
+            platoRepository.save(plato);
+            attr.addFlashAttribute("msg", "Plato actualizado exitosamente");
+            return "redirect:/menu";
+        }
+    }
+
+    @GetMapping("/borrarPlato")
+    public String borrarPlato(@RequestParam("idplato") int id, RedirectAttributes attr){
+
+        Optional<Plato> optionalPlato = platoRepository.findById(id);
+
+        if(optionalPlato.isPresent()){
+            platoRepository.deleteById(id);
+            attr.addFlashAttribute("msg", "Producto borrado exitosamente");
+        }
+        return "redirect:/menu";
+    }
+
+    /************************CUPONES************************/
 
     @GetMapping("/cupones")
     public String verCupones(Model model, @RequestParam(value = "idrestaurante", required = false) Integer idrestaurante){
@@ -247,6 +254,8 @@ public class AdminRestauranteController {
             return "redirect:/cupones";
         }
     }
+
+    /************************PEDIDOS************************/
 
     @GetMapping("/pedidos")
     public String verPedidos(Model model){
