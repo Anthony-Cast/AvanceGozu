@@ -23,7 +23,7 @@ public class Restaurante {
     @ManyToOne
     @JoinColumn(name="idadminrest")
     private Usuario usuario;
-    private Byte foto;
+    private byte[] foto;
 
     public Integer getIdrestaurante() {
         return idrestaurante;
@@ -81,11 +81,11 @@ public class Restaurante {
         this.usuario = usuario;
     }
 
-    public Byte getFoto() {
+    public byte[] getFoto() {
         return foto;
     }
 
-    public void setFoto(Byte foto) {
+    public void setFoto(byte[] foto) {
         this.foto = foto;
     }
 }

@@ -11,20 +11,23 @@ import com.example.avances.repository.PlatoRepository;
 import com.example.avances.repository.RestauranteRepository;
 import com.example.avances.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.MultipartFilter;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.swing.text.html.Option;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +45,7 @@ public class AdminRestauranteController {
     @Autowired
     PedidosRepository pedidosRepository;
 
-    @GetMapping("/loginadmin")
+    @GetMapping("/login")
     public String loginAdmin(){
         return "AdminRestaurantes/login";
     }
@@ -53,12 +56,17 @@ public class AdminRestauranteController {
     }
 
     @PostMapping("/categorias")
-    public String esperaConfirmacion(@ModelAttribute("restaurante") Restaurante restaurante,@RequestParam("categorias")String categorias){
-        System.out.println(categorias);
-        restauranteRepository.save(restaurante);
-        return "AdminRestaurantes/espera";
-    }
+    public String esperaConfirmacion(@ModelAttribute("restaurante") Restaurante restaurante,@RequestParam("imagen") MultipartFile file) throws IOException {
+        try {
+            restaurante.setFoto(file.getBytes());
+            System.out.println(file.getContentType());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        restauranteRepository.save(restaurante);
+            return "AdminRestaurantes/espera";
+        }
     @PostMapping("/estado")
     public String estadoAdmin(@RequestParam("correo") String correo) {
         //Se valida con el correo si en la bd aparece como usuario aceptado o en espera y tendría dos posibles salidas
@@ -148,6 +156,17 @@ public class AdminRestauranteController {
         return"AdminRestaurantes/correo";
     }
 
+    @GetMapping("/imagen")
+    public ResponseEntity<byte[]> perfilRestaurante(Model model) {
+        Optional<Restaurante> optional = restauranteRepository.findById(6);
+        if (optional.isPresent()) {
+            byte[] imagen = optional.get().getFoto();
+            HttpHeaders httpHeaders=new HttpHeaders();
+            httpHeaders.setContentType(MediaType.parseMediaType("image/png"));
+            return new ResponseEntity<>(imagen,httpHeaders, HttpStatus.OK);
+        }
+        return null;
+    }
     @GetMapping("/perfil")
     public String perfilRestaurante(){
         return "AdminRestaurantes/perfilrestaurante";
@@ -202,9 +221,7 @@ public class AdminRestauranteController {
 
     @GetMapping("/editarCupon")
     public String editarCupon(@ModelAttribute("cupon") Cupones cupon, @RequestParam("idcupon") int id, Model model){
-
         Optional<Cupones> optCupon = cuponesRepository.findById(id);
-
         if(optCupon.isPresent()){
             cupon = optCupon.get();
             Restaurante restaurante = cupon.getRestaurante();
@@ -217,7 +234,6 @@ public class AdminRestauranteController {
             return "redirect:/cupones";
         }
     }
-
     @GetMapping("/borrarCupon")
     public String borrarCupon(@RequestParam("idcupon") int id, RedirectAttributes attr){
 
