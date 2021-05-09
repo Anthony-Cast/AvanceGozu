@@ -115,7 +115,7 @@ public class AdminRestauranteController {
     }
 
     @GetMapping("/imagen")
-    public ResponseEntity<byte[]> perfilRestaurante(Model model) {
+    public ResponseEntity<byte[]> imagenRestaurante(Model model) {
         Optional<Restaurante> optional = restauranteRepository.findById(6);
         if (optional.isPresent()) {
             byte[] imagen = optional.get().getFoto();
@@ -321,5 +321,27 @@ public class AdminRestauranteController {
         model.addAttribute("platosNoTop5",pedidosRepository.platosMenosVendidos(id));
         return "AdminRestaurantes/reporte";
     }
-
+    @GetMapping("/preparacion")
+    public String pedidosPreparacion(){
+        return"AdminRestaurantes/preparación";
+    }
+    @GetMapping("/detallepedidos")
+    public String detallePedidos(@RequestParam("id")int id,Model model){
+        model.addAttribute("detalle",pedidosRepository.detallepedidos(id));
+        return "AdminRestaurantes/detalle";
+    }
+    @GetMapping("/aceptarpedido")
+    public String aceptarPedido(@RequestParam("id")int id){
+        Optional<Pedidos> optional = pedidosRepository.findById(id);
+        optional.get().setEstadorestaurante("aceptado");
+        pedidosRepository.save(optional.get());
+        return"redirect:/pedidos";
+    }
+    @GetMapping("/rechazarpedido")
+    public String rechazarPedido(@RequestParam("id")int id){
+        Optional<Pedidos> optional = pedidosRepository.findById(id);
+        optional.get().setEstadorestaurante("rechazado");
+        pedidosRepository.save(optional.get());
+        return"redirect:/pedidos";
+    }
 }

@@ -11,9 +11,11 @@ import java.util.List;
 @Repository
 public interface PedidosRepository extends JpaRepository<Pedidos,Integer> {
 
-    @Query(value = "select p.idpedidos,p.montototal,p.calificacionrestaurante,concat(u.nombre,' ',u.apellidos)cliente,cast(p.fechahorapedido as DATE)fechahorapedido from pedidos p inner join usuarios u on p.idcliente = u.idusuarios\n" +
+    @Query(value = "select p.idpedidos,p.montototal,concat(u.nombre,' ',u.apellidos)cliente,cast(p.fechahorapedido as DATE)fechahorapedido,d.direccion,d.distrito from pedidos p\n" +
+            "inner join usuarios u on p.idcliente = u.idusuarios\n" +
             "inner join restaurante r on p.restaurante_idrestaurante = r.idrestaurante\n" +
-            "where r.idrestaurante=3 and p.estadorestaurante='pendiente'",nativeQuery = true)
+            "inner join direcciones d on p.direccionentrega = d.iddirecciones\n" +
+            "where r.idrestaurante=2 and p.estadorestaurante='pendiente'",nativeQuery = true)
     List<PedidosAdminRestDto> listaPedidos();
 
     @Query(value = "select \n" +
@@ -104,4 +106,10 @@ public interface PedidosRepository extends JpaRepository<Pedidos,Integer> {
             "avg(p.calificacionrestaurante) as calificacionpromedio\n" +
             "from pedidos p where p.restaurante_idrestaurante = 1", nativeQuery = true)
     List<AvgCalifDto>calificacionPromedio(Integer id);
+    @Query(value="select p.idpedidos,pl.nombre,php.descripcion,php.cantidadplatos,php.cubiertos,d.direccion,d.distrito,p.montototal from pedidos p\n" +
+            "inner join pedidos_has_plato php on p.idpedidos = php.pedidos_idpedidos\n" +
+            "inner join plato pl on php.plato_idplato = pl.idplato\n" +
+            "inner join direcciones d on p.direccionentrega = d.iddirecciones\n" +
+            "where p.idpedidos=?1",nativeQuery = true)
+    List<PedidoDetallesDto>detallepedidos(Integer id);
 }
