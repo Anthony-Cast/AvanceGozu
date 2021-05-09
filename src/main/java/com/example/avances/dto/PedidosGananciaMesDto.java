@@ -1,7 +1,9 @@
 package com.example.avances.dto;
 
+import java.util.Date;
+
 public interface PedidosGananciaMesDto {
     String getmes();
-    String getanio();
-    int getganancia();
+    Integer getanio();
+    float getganancia();
 }

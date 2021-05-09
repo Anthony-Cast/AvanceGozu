@@ -264,6 +264,7 @@ public class AdminRestauranteController {
     public String verReporte(Model model){
         Integer id = 1;
         model.addAttribute("listaPedidosPorFecha",pedidosRepository.listaPedidosReporteporFechamasantigua(id));
+        model.addAttribute("listaGanancias",pedidosRepository.gananciaPorMes(id));
         return "AdminRestaurantes/reporte";
     }
 
@@ -271,7 +272,7 @@ public class AdminRestauranteController {
     public String searchReporte(@RequestParam("name") String name, Model model) {
         Integer id = 1;
         model.addAttribute("listaPedidosPorFecha",pedidosRepository.buscarPorReporte(name,id));
-        model.addAttribute("gananciaPorMes",pedidosRepository.gananciaPorMes(id));
+        model.addAttribute("listaGanancias",pedidosRepository.gananciaPorMes(id));
         return "AdminRestaurantes/reporte";
     }
 }

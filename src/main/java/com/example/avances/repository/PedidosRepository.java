@@ -1,7 +1,6 @@
 package com.example.avances.repository;
 
 import com.example.avances.dto.PedidosAdminRestDto;
-import com.example.avances.dto.PedidosBuscarReporteDto;
 import com.example.avances.dto.PedidosGananciaMesDto;
 import com.example.avances.dto.PedidosReporteDto;
 import com.example.avances.entity.Pedidos;
@@ -59,13 +58,12 @@ public interface PedidosRepository extends JpaRepository<Pedidos,Integer> {
             "            or p.montototal like %?1% or pt.nombre like %?1%\n" +
             "            or m.metodo like %?1% or d.distrito like %?1%)\n" +
             "    order by fechahorapedido asc", nativeQuery = true)
-    List<PedidosBuscarReporteDto> buscarPorReporte(String name, Integer id);
+    List<PedidosReporteDto> buscarPorReporte(String name, Integer id);
 
     @Query(value = "select \n" +
             "MONTHNAME(p.fechahorapedido) as mes,\n" +
             "YEAR(p.fechahorapedido) as anio,\n" +
-            "sum(p.montototal) as ganancia\n" +
-            "from pedidos p where p.restaurante_idrestaurante = ?1\n" +
+            "sum(p.montototal) as ganancia from pedidos p where p.restaurante_idrestaurante = ?1\n" +
             "group by MONTHNAME(p.fechahorapedido)", nativeQuery = true)
     List<PedidosGananciaMesDto> gananciaPorMes(Integer id);
 
