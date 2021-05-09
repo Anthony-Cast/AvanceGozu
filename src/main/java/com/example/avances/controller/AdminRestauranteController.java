@@ -1,8 +1,10 @@
 package com.example.avances.controller;
 
+import com.example.avances.entity.Pedidos;
 import com.example.avances.entity.Plato;
 import com.example.avances.entity.Restaurante;
 import com.example.avances.entity.Usuario;
+import com.example.avances.repository.PedidosRepository;
 import com.example.avances.repository.PlatoRepository;
 import com.example.avances.repository.RestauranteRepository;
 import com.example.avances.repository.UsuarioRepository;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -25,6 +28,8 @@ public class AdminRestauranteController {
     UsuarioRepository usuarioRepository;
     @Autowired
     RestauranteRepository restauranteRepository;
+    @Autowired
+    PedidosRepository pedidosRepository;
 
     @GetMapping("/loginadmin")
     public String loginAdmin(){
@@ -161,8 +166,9 @@ public class AdminRestauranteController {
     }
 
     @GetMapping("/pedidos")
-    public String verPedidos(){
+    public String verPedidos(Model model){
 
+        model.addAttribute("listaPedidos",pedidosRepository.listaPedidos());
         return "AdminRestaurantes/pedidos";
     }
 

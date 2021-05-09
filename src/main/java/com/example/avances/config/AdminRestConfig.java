@@ -19,7 +19,6 @@ public class AdminRestConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/sinrestaurante").hasAuthority("AdministradorRestaurante")
                 .anyRequest().permitAll();
-
     }
     @Autowired
     DataSource dataSource;
