@@ -112,4 +112,16 @@ public interface PedidosRepository extends JpaRepository<Pedidos,Integer> {
             "inner join direcciones d on p.direccionentrega = d.iddirecciones\n" +
             "where p.idpedidos=?1",nativeQuery = true)
     List<PedidoDetallesDto>detallepedidos(Integer id);
+    @Query(value="select p.idpedidos,p.montototal,concat(u.nombre,' ',u.apellidos)cliente,cast(p.fechahorapedido as DATE)fechahorapedido,d.direccion,d.distrito from pedidos p\n" +
+            "inner join usuarios u on p.idcliente = u.idusuarios\n" +
+            "inner join restaurante r on p.restaurante_idrestaurante = r.idrestaurante\n" +
+            "inner join direcciones d on p.direccionentrega = d.iddirecciones\n" +
+            "where r.idrestaurante=2 and p.estadorestaurante='aceptado'",nativeQuery = true)
+    List<PedidoAceptadosDtos>aceptadopedidos();
+    @Query(value="select p.idpedidos,p.montototal,concat(u.nombre,' ',u.apellidos)cliente,cast(p.fechahorapedido as DATE)fechahorapedido,d.direccion,d.distrito from pedidos p\n" +
+            "inner join usuarios u on p.idcliente = u.idusuarios\n" +
+            "inner join restaurante r on p.restaurante_idrestaurante = r.idrestaurante\n" +
+            "inner join direcciones d on p.direccionentrega = d.iddirecciones\n" +
+            "where r.idrestaurante=2 and p.estadorestaurante='preparado'",nativeQuery = true)
+    List<PedidosPreparadosDto>preparadopedidos();
 }

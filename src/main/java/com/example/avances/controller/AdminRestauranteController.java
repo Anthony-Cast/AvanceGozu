@@ -322,8 +322,10 @@ public class AdminRestauranteController {
         return "AdminRestaurantes/reporte";
     }
     @GetMapping("/preparacion")
-    public String pedidosPreparacion(){
-        return"AdminRestaurantes/preparación";
+    public String pedidosPreparacion(Model model){
+        model.addAttribute("listaAceptado",pedidosRepository.aceptadopedidos());
+        model.addAttribute("listaPreparado",pedidosRepository.preparadopedidos());
+        return"AdminRestaurantes/preparacion";
     }
     @GetMapping("/detallepedidos")
     public String detallePedidos(@RequestParam("id")int id,Model model){
@@ -343,5 +345,19 @@ public class AdminRestauranteController {
         optional.get().setEstadorestaurante("rechazado");
         pedidosRepository.save(optional.get());
         return"redirect:/pedidos";
+    }
+    @GetMapping("/preparadopedido")
+    public String platoPreparado(@RequestParam("id") int id){
+        Optional<Pedidos> optional = pedidosRepository.findById(id);
+        optional.get().setEstadorestaurante("preparado");
+        pedidosRepository.save(optional.get());
+        return "redirect:/preparacion";
+    }
+    @GetMapping("/entregadopedido")
+    public String entregadoPedido(@RequestParam("id") int id){
+        Optional<Pedidos> optional = pedidosRepository.findById(id);
+        optional.get().setEstadorestaurante("entregado");
+        pedidosRepository.save(optional.get());
+        return"redirect:/preparacion";
     }
 }
