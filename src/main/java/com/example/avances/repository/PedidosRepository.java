@@ -1,9 +1,6 @@
 package com.example.avances.repository;
 
-import com.example.avances.dto.PedidosAdminRestDto;
-import com.example.avances.dto.PedidosGananciaMesDto;
-import com.example.avances.dto.PedidosReporteDto;
-import com.example.avances.dto.PedidosTop5Dto;
+import com.example.avances.dto.*;
 import com.example.avances.entity.Pedidos;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -87,4 +84,19 @@ public interface PedidosRepository extends JpaRepository<Pedidos,Integer> {
             "where p.restaurante_idrestaurante = ?1\n" +
             "group by pt.nombre order by cantidad asc limit 5;",nativeQuery = true)
     List<PedidosTop5Dto> platosMenosVendidos(Integer id);
+
+    @Query(value = "select \n" +
+            "p.calificacionrestaurante as calificacion,\n" +
+            "p.comentario as comentario\n" +
+            "from pedidos p where p.restaurante_idrestaurante = ?1\n" +
+            "order by p.calificacionrestaurante desc", nativeQuery = true)
+    List<ComentariosDto>comentariosUsuarios(Integer id);
+
+    @Query(value = "select \n" +
+            "p.calificacionrestaurante as calificacion,\n" +
+            "p.comentario as comentario\n" +
+            "from pedidos p where p.restaurante_idrestaurante = ?2\n" +
+            "and p.calificacionrestaurante like %?1%\n" +
+            "order by p.calificacionrestaurante desc", nativeQuery = true)
+    List<ComentariosDto>buscarComentariosUsuarios(String name, Integer id);
 }

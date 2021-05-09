@@ -258,6 +258,22 @@ public class AdminRestauranteController {
         return "AdminRestaurantes/pedidos";
     }
 
+    /************************CALIFICACIONES************************/
+
+    @GetMapping("/calificaciones")
+    public String verCalificaciones(Model model){
+        Integer id = 1;
+        model.addAttribute("listaCalificacion",pedidosRepository.comentariosUsuarios(id));
+        return "AdminRestaurantes/calificaciones";
+    }
+
+    @PostMapping("/buscarCalificaciones")
+    public String buscarCalificaciones(@RequestParam("name") String name, Model model){
+        Integer id = 1;
+        model.addAttribute("listaCalificacion",pedidosRepository.buscarComentariosUsuarios(name,id));
+        return "AdminRestaurantes/calificaciones";
+    }
+
     /************************REPORTE************************/
 
     @GetMapping("/reporte")
