@@ -1,8 +1,8 @@
 package com.example.avances.entity;
 
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="restaurante")
@@ -19,11 +19,15 @@ public class Restaurante {
     @Column(nullable = false)
     private String nombre;
     private Float calificacionpromedio;
-
     @ManyToOne
     @JoinColumn(name="idadminrest")
     private Usuario usuario;
     private byte[] foto;
+    @ManyToMany
+    @JoinTable(name="restaurante_has_categorias",
+            joinColumns = @JoinColumn(name="restaurante_idrestaurante"),
+            inverseJoinColumns = @JoinColumn(name="categorias_idcategorias"))
+    private List<Categorias> categoriasrestList;
 
     public Integer getIdrestaurante() {
         return idrestaurante;
@@ -87,5 +91,13 @@ public class Restaurante {
 
     public void setFoto(byte[] foto) {
         this.foto = foto;
+    }
+
+    public List<Categorias> getCategoriasrestList() {
+        return categoriasrestList;
+    }
+
+    public void setCategoriasrestList(List<Categorias> categoriasrestList) {
+        this.categoriasrestList = categoriasrestList;
     }
 }

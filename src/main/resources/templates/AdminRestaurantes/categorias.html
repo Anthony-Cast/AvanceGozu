@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <!-- site metas -->
-    <title>Spicyo</title>
+    <title>Register</title>
 
     <!-- bootstrap css -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <!-- style css -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/styleAdminRest.css">
     <!-- responsive-->
     <link rel="stylesheet" href="css/responsive.css">
     <!-- awesome fontfamily -->
@@ -28,61 +29,61 @@
 <!-- body -->
 
 <body class="main-layout">
+
 <!-- loader  -->
-<div class="loader_bg">
+<!--<div class="loader_bg">
     <div class="loader"><img src="images/loading.gif" alt="" /></div>
 </div>
-
+-->
 <div class="wrapper">
     <!-- end loader -->
 
     <div id="content">
         <!-- header -->
         <header>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="full">
-                            <a class="logo" href="index.html"><img src="images/logo.png" alt="#" /></a>
-                        </div>
-                    </div>
-                    <div class="col-md-9">
-                        <div class="full">
-                            <div class="right_header_info">
-                                <ul>
-                                    <li class="button_user"><a class="button active" th:href="@{/login}">Cerrar sesión</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+            <div class="container-fluid" >
+                <div style="text-align: center">
+                    <h2 style="color: white;font-size: xx-large">Registra tu restaurante</h2>
                 </div>
             </div>
         </header>
 
-
         <div class="bg_bg">
+
+            <!-- end about -->
+            <!-- footer -->
             <fooetr>
                 <div class="footer">
                     <div class="container-fluid">
-                        <div class="row" style="text-align: center">
-                            <div class="col-xl-12" style="align-content: center;padding-bottom: 100px">
-                                <div class="row">
-                                    <a style="margin: auto"><div style="color: black;font-size:xx-large"><u>Su restaurante esta en proceso de evaluación</u></div></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-12" align="center">
-                            <div class="img-box">
-                                <figure>
-                                    <img style="width: 300px;height: 300px" src="/images/tiempo.png">
-                                </figure>
-                            </div>
-                        </div>
                         <div class="row">
-                            <div class="col-xl-12" style="align-content: center">
-                                <div class="row" style="padding-top: 100px">
-                                    <a class="send" type="submit" style="text-align: center" th:href="@{'/borrarRestaurante'+'?id='+${id}}">Anular Registro</a>
+                            <div class="col-md-12">
+                                <h2>Elige tus categorías</h2>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                <form method="post" th:action="@{/llenarcategoria}" th:object="${restaurante}" class="main_form">
+                                    <input type="hidden" id="cantidad" value="4">
+                                    <input type="hidden" th:field="*{idrestaurante}" th:value="${id}">
+                                    <div th:each="lista:${listacategorias}" class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                    <input type="checkbox" th:field="*{categoriasrestList}" th:value="${lista.getIdcategorias()}" th:text="${lista.getNombrecategoria()}">
+                                    </div>
+                                    <div>Seleccionados: <span id="seleccionados">0</span></div>
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <button class="send" type="submit" >Registrar</button>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <a class="send" th:href="@{'/borrarRestaurante'+'?id='+${id}}" style="text-align: center">Anular</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                <div class="img-box" align="center">
+                                    <figure><img th:src="@{/imagen}" style="width:500px;height:500px"></figure>
                                 </div>
+                                <div style="text-align: center;font-size: 30px;color: black">Imagen del restaurante</div>
                             </div>
                         </div>
                     </div>
@@ -97,6 +98,7 @@
 
         </div>
     </div>
+
     <div class="overlay"></div>
     <!-- Javascript files-->
     <script src="js/jquery.min.js"></script>
@@ -105,7 +107,6 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-
     <script src="js/jquery-3.0.0.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
@@ -126,7 +127,6 @@
             });
         });
     </script>
-
     <style>
         #owl-demo .item{
             margin: 3px;
@@ -137,8 +137,6 @@
             height: auto;
         }
     </style>
-
-
     <script>
         $(document).ready(function() {
             var owl = $('.owl-carousel');
@@ -160,7 +158,45 @@
             })
         })
     </script>
-
+</div>
 </body>
+<script>
+    $(document).ready(function(){
 
+        // Evento que se ejecuta al soltar una tecla en el input
+        $("#cantidad").keydown(function(){
+            $("input[type=checkbox]").prop('checked', false);
+            $("#seleccionados").html("0");
+        });
+
+        // Evento que se ejecuta al pulsar en un checkbox
+        $("input[type=checkbox]").change(function(){
+
+            // Cogemos el elemento actual
+            var elemento=this;
+            var contador=0;
+            var lista=[];
+            // Recorremos todos los checkbox para contar los que estan seleccionados
+            $("input[type=checkbox]").each(function(){
+                if($(this).is(":checked"))
+                    contador++;
+            });
+
+            var cantidadMaxima=parseInt($("#cantidad").val()) || 0;
+
+            // Comprovamos si supera la cantidad máxima indicada
+            if(contador>cantidadMaxima)
+            {
+                alert("Has seleccionado mas checkbox que los indicados");
+
+                // Desmarcamos el ultimo elemento
+                $(elemento).prop('checked', false);
+                contador--;
+            }
+
+            $("#seleccionados").html(contador);
+
+        });
+    });
+</script>
 </html>

@@ -1,15 +1,7 @@
 package com.example.avances.controller;
 
-import com.example.avances.entity.Cupones;
-import com.example.avances.entity.Pedidos;
-import com.example.avances.entity.Plato;
-import com.example.avances.entity.Restaurante;
-import com.example.avances.entity.Usuario;
-import com.example.avances.repository.CuponesRepository;
-import com.example.avances.repository.PedidosRepository;
-import com.example.avances.repository.PlatoRepository;
-import com.example.avances.repository.RestauranteRepository;
-import com.example.avances.repository.UsuarioRepository;
+import com.example.avances.entity.*;
+import com.example.avances.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -47,6 +39,8 @@ public class AdminRestauranteController {
     CuponesRepository cuponesRepository;
     @Autowired
     PedidosRepository pedidosRepository;
+    @Autowired
+    CategoriasRepository categoriasRepository;
 
     @GetMapping("/login")
     public String loginAdmin(){
@@ -59,7 +53,7 @@ public class AdminRestauranteController {
     }
 
     @PostMapping("/categorias")
-    public String esperaConfirmacion(@ModelAttribute("restaurante") Restaurante restaurante,@RequestParam("imagen") MultipartFile file) throws IOException {
+    public String esperaConfirmacion(@ModelAttribute("restaurante") Restaurante restaurante,@RequestParam("imagen") MultipartFile file,Model model) throws IOException {
         try {
             restaurante.setFoto(file.getBytes());
             System.out.println(file.getContentType());
@@ -68,7 +62,9 @@ public class AdminRestauranteController {
         }
 
         restauranteRepository.save(restaurante);
-            return "AdminRestaurantes/espera";
+        model.addAttribute("id",restaurante.getIdrestaurante());
+        model.addAttribute("listacategorias",categoriasRepository.findAll());
+            return "AdminRestaurantes/categorias";
         }
     @PostMapping("/estado")
     public String estadoAdmin(@RequestParam("correo") String correo) {
@@ -363,5 +359,18 @@ public class AdminRestauranteController {
     @GetMapping("/cuentaAdmin")
     public String cuenta(){
         return "AdminRestaurantes/cuenta";
+    }
+    @GetMapping("/borrarRestaurante")
+    public String borrarRestaurante(@RequestParam("id")int id){
+        restauranteRepository.deleteById(id);
+        return "redirect:/sinrestaurante";
+    }
+    @PostMapping("/llenarcategoria")
+    public String llenarcategorias(@ModelAttribute("restaurante") Restaurante restaurante,Model model){
+        Optional<Restaurante> optional = restauranteRepository.findById(restaurante.getIdrestaurante());
+        optional.get().setCategoriasrestList(restaurante.getCategoriasrestList());
+        restauranteRepository.save(optional.get());
+        model.addAttribute("id",optional.get().getIdrestaurante());
+        return "AdminRestaurantes/espera";
     }
 }
