@@ -365,7 +365,9 @@ public class AdminRestauranteController {
     }
 
     @GetMapping("/cuentaAdmin")
-    public String cuenta(){
+    public String cuenta(@RequestParam("id") int id,Model model){
+        model.addAttribute("restaurante",restauranteRepository.obtenerperfilRest(id));
+        model.addAttribute("usuario",usuarioRepository.findById(id).get());
         return "AdminRestaurantes/cuenta";
     }
     @GetMapping("/borrarRestaurante")
@@ -380,5 +382,37 @@ public class AdminRestauranteController {
         restauranteRepository.save(optional.get());
         model.addAttribute("id",optional.get().getIdrestaurante());
         return "AdminRestaurantes/espera";
+    }
+    @PostMapping("/guardaradminedit")
+    public String editPerfilUsuario(@ModelAttribute("usuario") @Valid Usuario usuario, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "AdminRestaurantes/cuenta";
+        }
+        else {
+            usuarioRepository.save(usuario);
+        }
+        return "redirect:/perfil";
+    }
+    @PostMapping("/guardarrestedit")
+    public String editarPerfilRest(@ModelAttribute("restaurante") Restaurante restaurante,@RequestParam("imagen") MultipartFile file,Model model){
+        try {
+            restaurante.setFoto(file.getBytes());
+            System.out.println(file.getContentType());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        restauranteRepository.save(restaurante);
+        model.addAttribute("id",restaurante.getIdrestaurante());
+        model.addAttribute("listacategorias",categoriasRepository.findAll());
+        return "AdminRestaurantes/categoriasedit";
+    }
+    @PostMapping("/llenarcategoriaedit")
+    public String llenarcategoriasedit(@ModelAttribute("restaurante") Restaurante restaurante,Model model){
+        Optional<Restaurante> optional = restauranteRepository.findById(restaurante.getIdrestaurante());
+        optional.get().setCategoriasrestList(restaurante.getCategoriasrestList());
+        restauranteRepository.save(optional.get());
+        model.addAttribute("id",optional.get().getIdrestaurante());
+        return "AdminRestaurantes/perfil";
     }
 }
