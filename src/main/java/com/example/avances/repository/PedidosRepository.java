@@ -15,8 +15,8 @@ public interface PedidosRepository extends JpaRepository<Pedidos,Integer> {
             "inner join usuarios u on p.idcliente = u.idusuarios\n" +
             "inner join restaurante r on p.restaurante_idrestaurante = r.idrestaurante\n" +
             "inner join direcciones d on p.direccionentrega = d.iddirecciones\n" +
-            "where r.idrestaurante=2 and p.estadorestaurante='pendiente'",nativeQuery = true)
-    List<PedidosAdminRestDto> listaPedidos();
+            "where r.idrestaurante=?1 and p.estadorestaurante='pendiente'",nativeQuery = true)
+    List<PedidosAdminRestDto> listaPedidos(Integer id);
 
     @Query(value = "select \n" +
             "p.idpedidos as numeropedido,\n" +
