@@ -1,13 +1,12 @@
 package com.example.avances.entity;
 
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.sql.Date;
-import java.time.LocalDateTime;
+
+
 
 
 @Entity
@@ -28,15 +27,15 @@ public class Usuario {
     @NotBlank(message = "No puede estar vacío")
     @Size(max=45, message = "El email no puede tener más de 45 caracteres")
     private String email;
-    @Column(name = "contraseniahash",nullable = false)
-    private String contraseniaHash;
+    @Column(nullable = false)
+    @NotBlank(message = "No puede estar vacío")
+    private String contraseniahash;
     @Column(nullable = false)
     @NotBlank(message = "No puede estar vacío")
     @Size(max=9,message = "No puede tener más de 9 dígitos")
     private String telefono;
-    @Column(name = "fechanacimiento",nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date fechaNacimiento;
+    @Column(nullable = false)
+    private Date fechanacimiento;
     @Column(nullable = false)
     @NotBlank(message = "No puede estar vacío")
     private String sexo;
@@ -47,9 +46,8 @@ public class Usuario {
     private Integer comisionventa;
     @Column(nullable = false)
     private String rol;
-    @Column(name = "cuentaactiva")
-    private Integer cuentaActiva;
-    private LocalDateTime ultimafechaingreso;
+    private Integer cuentaactiva;
+    private Date ultimafechaingreso;
 
     public Integer getIdusuarios() {
         return idusuarios;
@@ -83,12 +81,12 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getContraseniaHash() {
-        return contraseniaHash;
+    public String getContraseniahash() {
+        return contraseniahash;
     }
 
-    public void setContraseniaHash(String contraseniaHash) {
-        this.contraseniaHash = contraseniaHash;
+    public void setContraseniahash(String contraseniahash) {
+        this.contraseniahash = contraseniahash;
     }
 
     public String getTelefono() {
@@ -99,12 +97,12 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
+    public Date getFechanacimiento() {
+        return fechanacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
+    public void setFechanacimiento(Date fechanacimiento) {
+        this.fechanacimiento = fechanacimiento;
     }
 
     public String getSexo() {
@@ -139,19 +137,19 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public Integer getCuentaActiva() {
-        return cuentaActiva;
+    public Integer getCuentaactiva() {
+        return cuentaactiva;
     }
 
-    public void setCuentaActiva(Integer cuentaActiva) {
-        this.cuentaActiva = cuentaActiva;
+    public void setCuentaactiva(Integer cuentaactiva) {
+        this.cuentaactiva = cuentaactiva;
     }
 
-    public LocalDateTime getUltimafechaingreso() {
+    public Date getUltimafechaingreso() {
         return ultimafechaingreso;
     }
 
-    public void setUltimafechaingreso(LocalDateTime ultimafechaingreso) {
+    public void setUltimafechaingreso(Date ultimafechaingreso) {
         this.ultimafechaingreso = ultimafechaingreso;
     }
 }
