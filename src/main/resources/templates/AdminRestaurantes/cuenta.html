@@ -31,7 +31,39 @@
     <div class="loader"><img src="images/loading.gif" alt="" /></div>
 </div>
 <div class="wrapper">
-    <!-- end loader -->
+
+    <div class="sidebar">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+
+            <div id="dismiss">
+                <i class="fa fa-arrow-left"></i>
+            </div>
+
+            <ul class="list-unstyled components">
+
+                <li >
+                    <a th:href="@{/perfil}">Perfil</a>
+                </li>
+                <li class="active">
+                    <a th:href="@{/menu}">Menu</a>
+                </li>
+                <li class="active">
+                    <a th:href="@{/pedidos}">Pedidos</a>
+                </li>
+                <li>
+                    <a th:href="@{/cupones}">Cupones</a>
+                </li>
+                <li class="active">
+                    <a th:href="@{/calificaciones}">Calificaciones</a>
+                </li>
+                <li class="active">
+                    <a th:href="@{/reporte}">Reporte</a>
+                </li>
+            </ul>
+
+        </nav>
+    </div>
     <div id="content">
         <!-- header -->
         <header>
@@ -39,7 +71,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="full">
-                            <a class="logo" href="index.html"><img src="images/logo.png" alt="#" /></a>
+                            <a class="logo" th:href="@{/perfil}"><img src="images/logo.png" alt="#" /></a>
                         </div>
                     </div>
                 </div>
@@ -80,7 +112,7 @@
 
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <input class="form-control"  type="date" th:field="*{fechanacimiento}">
+                                            <input class="form-control"  type="date" th:field="*{fechaNacimiento}">
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                             <div class="text-dark" th:if="${#fields.hasErrors('sexo')}" th:errors="*{sexo}"></div>
@@ -93,8 +125,8 @@
 
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <div class="text-dark" th:if="${#fields.hasErrors('email')}" th:errors="*{contraseniahash}"></div>
-                                            <input class="form-control" placeholder="Contraseña" type="password" th:value="*{contraseniahash}" name="contraseniahash">
+                                            <div class="text-dark" th:if="${#fields.hasErrors('email')}" th:errors="*{contraseniaHash}"></div>
+                                            <input class="form-control" placeholder="Contraseña" type="password" th:value="*{contraseniaHash}" name="contraseniahash">
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                             <div class="row">

@@ -37,7 +37,38 @@
 -->
 <div class="wrapper">
     <!-- end loader -->
+    <div class="sidebar">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
 
+            <div id="dismiss">
+                <i class="fa fa-arrow-left"></i>
+            </div>
+
+            <ul class="list-unstyled components">
+
+                <li >
+                    <a th:href="@{/perfil}">Perfil</a>
+                </li>
+                <li class="active">
+                    <a th:href="@{/menu}">Menu</a>
+                </li>
+                <li class="active">
+                    <a th:href="@{/pedidos}">Pedidos</a>
+                </li>
+                <li>
+                    <a th:href="@{/cupones}">Cupones</a>
+                </li>
+                <li class="active">
+                    <a th:href="@{/calificaciones}">Calificaciones</a>
+                </li>
+                <li class="active">
+                    <a th:href="@{/reporte}">Reporte</a>
+                </li>
+            </ul>
+
+        </nav>
+    </div>
     <div id="content">
         <!-- header -->
         <header>
@@ -63,8 +94,8 @@
                                 <form method="post" th:action="@{/llenarcategoria}" th:object="${restaurante}" class="main_form">
                                     <input type="hidden" id="cantidad" value="4">
                                     <input type="hidden" th:field="*{idrestaurante}" th:value="${id}">
-                                    <div th:each="lista:${listacategorias}" class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                    <input type="checkbox" th:field="*{categoriasrestList}" th:value="${lista.getIdcategorias()}" th:text="${lista.getNombrecategoria()}">
+                                    <div th:each="lista: ${listacategorias}" class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                        <input type="checkbox" th:field="*{categoriasrestList}" th:value="${lista.idcategorias}" th:text="${lista.nombrecategoria}">
                                     </div>
                                     <div>Seleccionados: <span id="seleccionados">0</span></div>
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">

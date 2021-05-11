@@ -53,11 +53,20 @@
                 <li >
                     <a th:href="@{/perfil}">Perfil</a>
                 </li>
+                <li class="active">
+                    <a th:href="@{/menu}">Menu</a>
+                </li>
+                <li class="active">
+                    <a th:href="@{/pedidos}">Pedidos</a>
+                </li>
                 <li>
                     <a th:href="@{/cupones}">Cupones</a>
                 </li>
                 <li class="active">
                     <a th:href="@{/calificaciones}">Calificaciones</a>
+                </li>
+                <li class="active">
+                    <a th:href="@{/reporte}">Reporte</a>
                 </li>
             </ul>
 
@@ -70,7 +79,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="full">
-                                <a class="logo" href="index.html"><img src="images/logo.png" alt="#" /></a>
+                                <a class="logo" th:href="@{/perfil}"><img src="images/logo.png" alt="#" /></a>
                             </div>
                         </div>
                         <div class="col-md-9">
@@ -81,7 +90,7 @@
                                         <li class="button_user"><a class="button active" th:href="@{/cuentaAdmin}">Mi cuenta</a><a class="button" th:href="@{/login}">Logout</a></li>
                                         <li>
                                             <button type="button" id="sidebarCollapse">
-                                                <img src="images/menu_icon.png" alt="#">
+                                                <img src="images/menu_icon.png" th:href="@{/perfil}" alt="#">
                                             </button>
                                         </li>
                                     </ul>
