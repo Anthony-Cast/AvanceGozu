@@ -87,25 +87,20 @@
                                 <tr>
                                     <th scope="col">PEDIDO</th>
                                     <th scope="col">NOMBRE</th>
-                                    <th scope="col">DESCRIPCION</th>
                                     <th scope="col">CANTIDAD PLATOS</th>
                                     <th scope="col">DIRECCION</th>
                                     <th scope="col">DISTRITO</th>
                                     <th scope="col">MONTO TOTAL</th>
-                                    <th scope="col">CUBIERTOS</th>
-                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr th:each="pedido:${detalle}">
                                     <td th:text="${pedido.getidpedidos()}"></td>
                                     <td th:text="${pedido.getnombre()}"></td>
-                                    <td th:text="${pedido.getdescripcion()}"></td>
                                     <td th:text="${pedido.getcantidadplatos()}"></td>
                                     <td th:text="${pedido.getdireccion()}"></td>
                                     <td th:text="${pedido.getdistrito()}"></td>
                                     <td th:text="${pedido.getmontototal()}"></td>
-                                    <td th:text="${pedido.getcubiertos()}"></td>
                                 </tr>
                                 </tbody>
                             </table>

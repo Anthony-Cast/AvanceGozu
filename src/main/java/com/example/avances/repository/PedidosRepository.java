@@ -106,7 +106,15 @@ public interface PedidosRepository extends JpaRepository<Pedidos,Integer> {
             "avg(p.calificacionrestaurante) as calificacionpromedio\n" +
             "from pedidos p where p.restaurante_idrestaurante = 1", nativeQuery = true)
     List<AvgCalifDto>calificacionPromedio(Integer id);
-    @Query(value="select p.idpedidos,pl.nombre,php.descripcion,php.cantidadplatos,php.cubiertos,d.direccion,d.distrito,p.montototal from pedidos p\n" +
+    @Query(value="select p.idpedidos as idpedidos,\n" +
+            "pl.nombre as nombre,\n" +
+            "php.descripcion as descripcion,\n" +
+            "php.cantidadplatos as cantidadplatos,\n" +
+            "php.cubiertos as cubiertos,\n" +
+            "d.direccion as direccion,\n" +
+            "d.distrito as distrito,\n" +
+            "p.montototal as montototal\n" +
+            "from pedidos p\n" +
             "inner join pedidos_has_plato php on p.idpedidos = php.pedidos_idpedidos\n" +
             "inner join plato pl on php.plato_idplato = pl.idplato\n" +
             "inner join direcciones d on p.direccionentrega = d.iddirecciones\n" +
@@ -116,12 +124,12 @@ public interface PedidosRepository extends JpaRepository<Pedidos,Integer> {
             "inner join usuarios u on p.idcliente = u.idusuarios\n" +
             "inner join restaurante r on p.restaurante_idrestaurante = r.idrestaurante\n" +
             "inner join direcciones d on p.direccionentrega = d.iddirecciones\n" +
-            "where r.idrestaurante=2 and p.estadorestaurante='aceptado'",nativeQuery = true)
+            "where r.idrestaurante=1 and p.estadorestaurante='aceptado'",nativeQuery = true)
     List<PedidoAceptadosDtos>aceptadopedidos();
     @Query(value="select p.idpedidos,p.montototal,concat(u.nombre,' ',u.apellidos)cliente,cast(p.fechahorapedido as DATE)fechahorapedido,d.direccion,d.distrito from pedidos p\n" +
             "inner join usuarios u on p.idcliente = u.idusuarios\n" +
             "inner join restaurante r on p.restaurante_idrestaurante = r.idrestaurante\n" +
             "inner join direcciones d on p.direccionentrega = d.iddirecciones\n" +
-            "where r.idrestaurante=2 and p.estadorestaurante='preparado'",nativeQuery = true)
+            "where r.idrestaurante=1 and p.estadorestaurante='preparado'",nativeQuery = true)
     List<PedidosPreparadosDto>preparadopedidos();
 }
